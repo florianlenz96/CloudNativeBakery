@@ -21,7 +21,7 @@ else
             <MudCard Class="product-card">
                 <MudCardContent>
                     <MudText Typo="Typo.h6">@article.Name</MudText>
-                    <MudText Typo="Typo.subtitle1">@article.Price €</MudText>
+                    <MudText Typo="Typo.subtitle1">@article.Price.ToString("C")</MudText>
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton Class="add-to-basket-button"
@@ -41,8 +41,14 @@ else
                 Total Items: <strong>@BasketService.TotalCount</strong>
             </MudText>
             <MudText Typo="Typo.body1">
-                Total Price: <strong>@BasketService.TotalPrice €</strong>
+                Total Price: <strong>@BasketService.TotalPrice.ToString("C")</strong>
             </MudText>
+            <MudIconButton
+                Icon="@Icons.Material.Filled.ShoppingBasket"
+                Color="Color.Primary"
+                Href="/shoppingcart"
+                AriaLabel="View Basket"
+                Size="Size.Large" />
         </MudPaper>
     </div>
 }

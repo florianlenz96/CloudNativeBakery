@@ -10,8 +10,8 @@ namespace WebApp.Services
         private readonly List<CartArticle> _items = new();
 
         public IReadOnlyCollection<CartArticle> Items => _items.AsReadOnly();
-        public int TotalCount => _items.Count;
-        public double TotalPrice => _items.Sum(i => i.Price);
+        public int TotalCount => _items.Sum(i => i.Quantity);
+        public double TotalPrice => _items.Sum(i => i.Quantity * i.Price);
 
         public void Add(Article article)
         {
