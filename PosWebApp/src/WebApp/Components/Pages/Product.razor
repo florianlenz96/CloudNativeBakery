@@ -1,44 +1,50 @@
-@page "/product/{Name}"
+@page "/product/{CategoryName}"
 @using WebApp.Models.Products
 @using WebApp.Services
-@using Microsoft.AspNetCore.Components
+@inject BackendApiService BackendApiService
 
-<PageTitle>@Name</PageTitle>
+<PageTitle>@CategoryName</PageTitle>
 
-<h1>@Name</h1>
+<h1>@CategoryName</h1>
 
-@if (category == null)
+@if (Articles == null)
 {
-    <p>Loading articles…</p>
+    <MudProgressCircular Indeterminate="true" Class="mt-6" />
 }
-else if (!category.Articles.Any())
+else if (!Articles.Any())
 {
-    <p>No articles found in this category.</p>
+    <MudText>Noch keine Produkte in dieser Kategorie.</MudText>
 }
 else
 {
-    <ul class="list-unstyled">
-        @foreach (var article in category.Articles)
+    <MudGrid Gutter="GutterSize.Small">
+        @foreach (var article in Articles)
         {
-            <li class="mb-2">
-                <strong>@article.Name</strong> — @article.Price.ToString("C")
-            </li>
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudCard Class="mb-4">
+                    <MudCardContent>
+                        <MudText Typo="Typo.h6">@article.Name</MudText>
+                        <MudText>@article.Price.ToString("C")</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary">Details</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
         }
-    </ul>
+    </MudGrid>
 }
 
 @code {
     [Parameter]
-    public string Name { get; set; } = string.Empty;
+    public string CategoryName { get; set; } = string.Empty;
 
-    [Inject]
-    public BackendApiService BackendApiService { get; set; } = default!;
+    private IReadOnlyCollection<Article>? Articles;
 
-    private Category? category;
-
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
-        var all = await BackendApiService.LoadCategoriesAsync();
-        if (all != null) category = all.FirstOrDefault(c => c.Name.Equals(Name, StringComparison.OrdinalIgnoreCase));
+        var categories = await BackendApiService.LoadCategoriesAsync();
+        var category = categories?.FirstOrDefault(c => c.Name.Equals(CategoryName, StringComparison.OrdinalIgnoreCase));
+        Articles = category?.Articles ?? Array.Empty<Article>();
     }
 }

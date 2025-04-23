@@ -1,45 +1,33 @@
 @using WebApp.Models.Products
 @using WebApp.Services
-@using Microsoft.AspNetCore.Components.Routing
-@using MudBlazor
 
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">WebApp</a>
-    </div>
+<div class="menu-header">
+    <img src="images/logo.png" alt="WebApp Logo" class="menu-logo" />
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler"/>
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span>
-                Home
-            </NavLink>
+<div class="menu-grid">
+    <NavLink class="menu-link" href="" Match="NavLinkMatch.All">
+        <div class="menu-item">
+            Home
         </div>
-        @foreach (var category in categories ?? Enumerable.Empty<Category>())
-        {
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="@GetLink(category.Name)" Match="NavLinkMatch.Prefix">
-                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span>
-                    @category.Name
-                    <MudChip Size="Size.Small" Class="ms-2">
-                        @category.Articles.Count
-                    </MudChip>
-                </NavLink>
+    </NavLink>
+    @foreach (var category in categories ?? Enumerable.Empty<Category>())
+    {
+        <NavLink class="menu-link" href="@GetLink(category.Name)" Match="NavLinkMatch.Prefix">
+            <div class="menu-item">
+                @category.Name
+                <span class="badge">@category.Articles.Count</span>
             </div>
-        }
-    </nav>
+        </NavLink>
+    }
 </div>
 
 @code {
     [Inject] BackendApiService BackendApiService { get; set; }
-    
+
     private IReadOnlyCollection<Category>? categories;
 
-    private string GetLink(string name) => $"product/{name}";
+    private string GetLink(string name) => $"product/{Uri.EscapeDataString(name)}";
 
     protected override async Task OnInitializedAsync()
     {
