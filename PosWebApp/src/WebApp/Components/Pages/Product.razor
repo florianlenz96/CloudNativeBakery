@@ -9,10 +9,6 @@
 
 <h1>@CategoryName</h1>
 
-<p role="status">Current count: @currentCount</p>
-
-<MudButton class="btn btn-primary" @onclick="IncrementCount">Click me</MudButton>
-
 @if (category == null)
 {
     <MudProgressCircular Indeterminate="true" />
@@ -54,13 +50,6 @@ else
 @code {
     [Parameter] public string CategoryName { get; set; } = string.Empty;
     private Category? category;
-    
-    private int currentCount = 0;
-
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
 
     protected override async Task OnInitializedAsync()
     {
