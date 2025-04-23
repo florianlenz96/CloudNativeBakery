@@ -1,6 +1,10 @@
 using WebApp.Components;
+using WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpClient<BackendApiService>(options =>
+    options.BaseAddress = new Uri(builder.Configuration["BackendApiService:BaseAddress"]));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
