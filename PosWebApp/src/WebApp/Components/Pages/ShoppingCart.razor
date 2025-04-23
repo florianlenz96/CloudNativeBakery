@@ -1,10 +1,10 @@
 @page "/shoppingcart"
 @rendermode InteractiveServer
-
-@using WebApp.Models.Products
 @using WebApp.Models.ShoppingCart
 @using WebApp.Services
 @inject BasketService BasketService
+@inject BackendApiService BackendApiService
+@inject ISnackbar Snackbar
 
 <PageTitle>Shopping Cart</PageTitle>
 
@@ -52,7 +52,17 @@ else
         BasketService.Remove(item);
     }
 
-    private void Checkout()
+    private async Task Checkout()
     {
+        var success = await BackendApiService.SendOrderAsync(BasketService.Items);
+        if (success)
+        {
+            BasketService.Clear();
+            Snackbar.Add("Order placed successfully!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add("Failed to place order.", Severity.Error);
+        }
     }
 }
