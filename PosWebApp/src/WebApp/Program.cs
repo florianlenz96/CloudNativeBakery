@@ -1,30 +1,34 @@
 using WebApp.Components;
 using WebApp.Services;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// HTTP API client for BackendApiService
 builder.Services.AddHttpClient<BackendApiService>(options =>
     options.BaseAddress = new Uri(builder.Configuration["BackendApiService:BaseAddress"]));
 
-// Add services to the container.
+// Register MudBlazor services for UI components
+builder.Services.AddMudServices();
+
+// Add Blazor interactive components
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Error handling for non-development environments
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 app.UseAntiforgery();
 
+// Map the Blazor app
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
