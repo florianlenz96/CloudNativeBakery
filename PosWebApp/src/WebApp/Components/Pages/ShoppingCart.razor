@@ -1,0 +1,58 @@
+@page "/shoppingcart"
+@rendermode InteractiveServer
+
+@using WebApp.Models.Products
+@using WebApp.Models.ShoppingCart
+@using WebApp.Services
+@inject BasketService BasketService
+
+<PageTitle>Shopping Cart</PageTitle>
+
+<h1>Your Shopping Basket</h1>
+
+@if (!BasketService.Items.Any())
+{
+    <p>Your basket is empty.</p>
+}
+else
+{
+    <MudTable Items="BasketService.Items" Elevation="1" Hover="true">
+        <HeaderContent>
+            <MudTh>Product</MudTh>
+            <MudTh>Quantity</MudTh>
+            <MudTh align="right">Price</MudTh>
+            <MudTh align="right">Total</MudTh>
+            <MudTh align="center">Action</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Product">@context.Name</MudTd>
+            <MudTd DataLabel="Product">@context.Quantity</MudTd>
+            <MudTd DataLabel="Price" Align="Right">@context.Price.ToString("C")</MudTd>
+            <MudTd DataLabel="Price" Align="Right">@context.TotalPrice.ToString("C")</MudTd>
+            <MudTd DataLabel="Action" Align="Center">
+                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                               Color="Color.Error"
+                               OnClick="() => RemoveItem(context)"
+                               AriaLabel="Remove item" />
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+}
+
+<div class="basket-summary">
+    <span class="total">Total: @BasketService.TotalPrice.ToString("C")</span>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Checkout">
+        Checkout
+    </MudButton>
+</div>
+
+@code {
+    private void RemoveItem(CartArticle item)
+    {
+        BasketService.Remove(item);
+    }
+
+    private void Checkout()
+    {
+    }
+}
