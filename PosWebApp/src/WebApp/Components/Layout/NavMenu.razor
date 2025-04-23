@@ -1,5 +1,7 @@
-﻿@using WebApp.Models.Products
+@using WebApp.Models.Products
 @using WebApp.Services
+@using Microsoft.AspNetCore.Components.Routing
+
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">WebApp</a>
@@ -19,7 +21,8 @@
         @foreach (var category in categories ?? Enumerable.Empty<Category>())
         {
             <div class="nav-item px-3">
-                <NavLink class="nav-link">
+                <NavLink class="nav-link" href="@GetLink(category.Name)" Match="NavLinkMatch.Prefix">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span>
                     @category.Name
                 </NavLink>
             </div>
@@ -32,6 +35,8 @@
     [Inject] BackendApiService BackendApiService { get; set; }
     
     private IReadOnlyCollection<Category>? categories;
+
+    private string GetLink(string name) => $"product/{name}";
 
     protected override async Task OnInitializedAsync()
     {

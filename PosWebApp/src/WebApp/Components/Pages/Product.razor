@@ -1,0 +1,44 @@
+@page "/product/{Name}"
+@using WebApp.Models.Products
+@using WebApp.Services
+@using Microsoft.AspNetCore.Components
+
+<PageTitle>@Name</PageTitle>
+
+<h1>@Name</h1>
+
+@if (category == null)
+{
+    <p>Loading articles…</p>
+}
+else if (!category.Articles.Any())
+{
+    <p>No articles found in this category.</p>
+}
+else
+{
+    <ul class="list-unstyled">
+        @foreach (var article in category.Articles)
+        {
+            <li class="mb-2">
+                <strong>@article.Name</strong> — @article.Price.ToString("C")
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter]
+    public string Name { get; set; } = string.Empty;
+
+    [Inject]
+    public BackendApiService BackendApiService { get; set; } = default!;
+
+    private Category? category;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var all = await BackendApiService.LoadCategoriesAsync();
+        if (all != null) category = all.FirstOrDefault(c => c.Name.Equals(Name, StringComparison.OrdinalIgnoreCase));
+    }
+}
