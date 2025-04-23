@@ -12,13 +12,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E9E5A5DB-C37
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackeryApi", "BackeryApi\src\BackeryApi\BackeryApi.csproj", "{FB8EE535-105A-437D-88B9-6596C5458F49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackeryApi.Domain", "BackeryApi.Domain\BackeryApi.Domain.csproj", "{DCBE7194-C502-4F49-9C57-483FBC8D9806}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackeryApi.Domain", "BackeryApi\src\BackeryApi.Domain\BackeryApi.Domain.csproj", "{DCBE7194-C502-4F49-9C57-483FBC8D9806}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackeryApi.SqlServer", "BackeryApi.SqlServer\BackeryApi.SqlServer.csproj", "{12238275-B138-43BE-B799-E36BB71B03DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackeryApi.SqlServer", "BackeryApi\src\BackeryApi.SqlServer\BackeryApi.SqlServer.csproj", "{12238275-B138-43BE-B799-E36BB71B03DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackeryApi.Application", "BackeryApi.Application\BackeryApi.Application.csproj", "{89620325-AA23-412D-9E7D-6F06E8909B2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackeryApi.Application", "BackeryApi\src\BackeryApi.Application\BackeryApi.Application.csproj", "{89620325-AA23-412D-9E7D-6F06E8909B2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackeryApi.SqlServer.Migrator", "BackeryApi.SqlServer.Migrator\BackeryApi.SqlServer.Migrator.csproj", "{27FA12E9-2B67-493C-B615-893E3AD02FE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackeryApi.SqlServer.Migrator", "BackeryApi\src\BackeryApi.SqlServer.Migrator\BackeryApi.SqlServer.Migrator.csproj", "{27FA12E9-2B67-493C-B615-893E3AD02FE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

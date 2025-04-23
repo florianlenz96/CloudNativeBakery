@@ -12,9 +12,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\BackeryApi.Application\BackeryApi.Application.csproj" />
-      <ProjectReference Include="..\..\..\BackeryApi.Domain\BackeryApi.Domain.csproj" />
-      <ProjectReference Include="..\..\..\BackeryApi.SqlServer\BackeryApi.SqlServer.csproj" />
+      <ProjectReference Include="..\BackeryApi.Application\BackeryApi.Application.csproj" />
+      <ProjectReference Include="..\BackeryApi.Domain\BackeryApi.Domain.csproj" />
+      <ProjectReference Include="..\BackeryApi.SqlServer\BackeryApi.SqlServer.csproj" />
     </ItemGroup>
 
 </Project>
