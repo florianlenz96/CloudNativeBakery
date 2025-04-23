@@ -1,50 +1,70 @@
 @page "/product/{CategoryName}"
+@rendermode InteractiveServer
 @using WebApp.Models.Products
 @using WebApp.Services
 @inject BackendApiService BackendApiService
+@inject BasketService BasketService
 
 <PageTitle>@CategoryName</PageTitle>
 
 <h1>@CategoryName</h1>
 
-@if (Articles == null)
+<p role="status">Current count: @currentCount</p>
+
+<MudButton class="btn btn-primary" @onclick="IncrementCount">Click me</MudButton>
+
+@if (category == null)
 {
-    <MudProgressCircular Indeterminate="true" Class="mt-6" />
-}
-else if (!Articles.Any())
-{
-    <MudText>Noch keine Produkte in dieser Kategorie.</MudText>
+    <MudProgressCircular Indeterminate="true" />
 }
 else
 {
-    <MudGrid Gutter="GutterSize.Small">
-        @foreach (var article in Articles)
+    <div class="product-grid">
+        @foreach (var article in category.Articles)
         {
-            <MudItem xs="12" sm="6" md="4" lg="3">
-                <MudCard Class="mb-4">
-                    <MudCardContent>
-                        <MudText Typo="Typo.h6">@article.Name</MudText>
-                        <MudText>@article.Price.ToString("C")</MudText>
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary">Details</MudButton>
-                    </MudCardActions>
-                </MudCard>
-            </MudItem>
+            <MudCard Class="product-card">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6">@article.Name</MudText>
+                    <MudText Typo="Typo.subtitle1">@article.Price €</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Class="add-to-basket-button"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               @onclick="() => BasketService.Add(article)">
+                        Add to Basket
+                    </MudButton>
+                </MudCardActions>
+            </MudCard>
         }
-    </MudGrid>
+    </div>
+    
+    <div class="basket-summary">
+        <MudPaper Elevation="4" Class="p-4 d-flex align-center justify-space-between">
+            <MudText Typo="Typo.body1">
+                Total Items: <strong>@BasketService.TotalCount</strong>
+            </MudText>
+            <MudText Typo="Typo.body1">
+                Total Price: <strong>@BasketService.TotalPrice €</strong>
+            </MudText>
+        </MudPaper>
+    </div>
 }
 
 @code {
-    [Parameter]
-    public string CategoryName { get; set; } = string.Empty;
+    [Parameter] public string CategoryName { get; set; } = string.Empty;
+    private Category? category;
+    
+    private int currentCount = 0;
 
-    private IReadOnlyCollection<Article>? Articles;
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
 
     protected override async Task OnInitializedAsync()
     {
         var categories = await BackendApiService.LoadCategoriesAsync();
-        var category = categories?.FirstOrDefault(c => c.Name.Equals(CategoryName, StringComparison.OrdinalIgnoreCase));
-        Articles = category?.Articles ?? Array.Empty<Article>();
+        category = categories?.FirstOrDefault(c => c.Name == CategoryName);
     }
 }

@@ -1,0 +1,27 @@
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.product-card {
+    position: relative;
+}
+
+.add-to-basket-button {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+/* Basket summary footer */
+.basket-summary {
+    position: fixed;
+    left: 280px; /* width of sidebar */
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background: #ffffff;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}

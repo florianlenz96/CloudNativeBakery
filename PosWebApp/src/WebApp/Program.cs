@@ -11,6 +11,9 @@ builder.Services.AddHttpClient<BackendApiService>(options =>
 // Register MudBlazor services for UI components
 builder.Services.AddMudServices();
 
+// Register BasketService to manage the shopping basket
+builder.Services.AddSingleton<BasketService>();
+
 // Add Blazor interactive components
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
