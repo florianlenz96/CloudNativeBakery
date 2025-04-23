@@ -80,6 +80,8 @@ nunit-*.xml
 *.log
 *.sql
 *.sqlite
+.idea/
+.idea
 
 # OS generated files #
 ######################
