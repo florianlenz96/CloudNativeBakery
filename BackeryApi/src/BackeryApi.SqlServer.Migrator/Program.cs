@@ -1,18 +1,30 @@
-﻿using BackeryApi.SqlServer;
+﻿using BackeryApi.Domain.Products;
+using BackeryApi.SqlServer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-var hostBuilder = Host.CreateDefaultBuilder(args);
+var builder = Host.CreateApplicationBuilder(args);
 
-var host = hostBuilder
-    .ConfigureServices((builder, services) =>
+builder.Services.AddBackerySqlServer(builder.Configuration);
+
+builder.Build();
+
+var scope = builder.Services.BuildServiceProvider().CreateScope();
+var dbContext = scope.ServiceProvider.GetRequiredService<BackeryDbContext>();
+await dbContext.Database.MigrateAsync();
+
+dbContext.Categories.Add(new Category
+{
+    Name = "Backwaren",
+    Articles = new []
     {
-        services.AddBackerySqlServer(builder.Configuration);
-    })
-    .Build();
-    
-    var scope = host.Services.CreateScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService<BackeryDbContext>();
-    await dbContext.Database.MigrateAsync();
+        new Article
+        {
+            Name = "Brot",
+            Price = 1.99,
+        }
+    }
+});
+
+await dbContext.SaveChangesAsync();
