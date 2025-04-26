@@ -23,7 +23,40 @@ dbContext.Categories.Add(new Category
         {
             Name = "Brot",
             Price = 1.99,
-        }
+        },
+        new Article
+        {
+            Name = "Brötchen",
+            Price = 0.49,
+        },
+        new Article
+        {
+            Name = "Croissant",
+            Price = 1.29,
+        },
+    }
+});
+
+dbContext.Categories.Add(new Category
+{
+    Name = "Getränke",
+    Articles = new []
+    {
+        new Article
+        {
+            Name = "Wasser",
+            Price = 0.99,
+        },
+        new Article
+        {
+            Name = "Cola",
+            Price = 1.49,
+        },
+        new Article
+        {
+            Name = "Saft",
+            Price = 1.19,
+        },
     }
 });
 
