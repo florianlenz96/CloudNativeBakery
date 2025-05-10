@@ -2,12 +2,13 @@ using MudBlazor;
 using WebApp.Components;
 using WebApp.Services;
 using MudBlazor.Services;
+using Dapr.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // HTTP API client for BackendApiService
-builder.Services.AddHttpClient<BackendApiService>(options =>
-    options.BaseAddress = new Uri(builder.Configuration["BackendApiService:BaseAddress"]));
+builder.Services.AddDaprClient();
+builder.Services.AddTransient<BackendApiService>();
 
 // Register MudBlazor services for UI components
 builder.Services.AddMudServices();

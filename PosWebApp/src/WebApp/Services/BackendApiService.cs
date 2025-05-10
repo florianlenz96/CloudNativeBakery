@@ -1,23 +1,30 @@
+using Dapr.Client;
 using WebApp.Models.Products;
 using WebApp.Models.ShoppingCart;
 
 namespace WebApp.Services;
 
-public class BackendApiService(HttpClient httpClient)
+public class BackendApiService(DaprClient daprClient)
 {
-    private readonly HttpClient _httpClient = httpClient;
-
     public async Task<IReadOnlyCollection<Category>?> LoadCategoriesAsync()
     {
-        return await _httpClient.GetFromJsonAsync<IReadOnlyCollection<Category>>("category");
+        return await daprClient.InvokeMethodAsync<IReadOnlyCollection<Category>>(HttpMethod.Get, "api", "api/category");
     }
     
     public async Task<bool> SendOrderAsync(IReadOnlyCollection<CartArticle> articles)
     {
-        var response = await _httpClient.PostAsJsonAsync("order", new
+        try
         {
-            articles
-        });
-        return response.IsSuccessStatusCode;
+            await daprClient.InvokeMethodAsync(HttpMethod.Post, "api", "api/order", new
+            {
+                articles
+            });
+            
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 }

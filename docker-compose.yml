@@ -1,0 +1,85 @@
+services:
+  sql:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      ACCEPT_EULA: 1
+      MSSQL_SA_PASSWORD: MyPa$$Word1234!
+      MSSQL_PID: Developer
+      MSSQL_USER: SA
+    networks:
+      - default
+  
+  migrator:
+    build:
+      context: .
+      dockerfile: BackeryApi/src/BackeryApi.SqlServer.Migrator/Dockerfile
+    depends_on:
+      - sql
+    links:
+      - sql
+    environment:
+      ConnectionStrings__BackeryApi: "Server=sql,1433;User Id=sa;Password=MyPa$$Word1234!;TrustServerCertificate=True;"
+      
+  api:
+    build:
+      context: .
+      dockerfile: BackeryApi/src/BackeryApi/Dockerfile
+    depends_on:
+      - sql
+    networks:
+      - default
+    environment:
+      ConnectionStrings__BackeryApi: "Server=sql,1433;User Id=sa;Password=MyPa$$Word1234!;TrustServerCertificate=True;"
+
+  api-dapr:
+    image: "daprio/daprd:edge"
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "api",
+        "-app-port",
+        "8080",
+        "--resources-path",
+        "/components",
+        "-log-level",
+        "debug",
+      ]
+    volumes:
+      - ./components:/components
+    depends_on:
+      - api
+    network_mode: "service:api"
+      
+  webapp:
+    build:
+      context: .
+      dockerfile: PosWebApp/src/WebApp/Dockerfile
+    ports:
+      - "9080:8080"
+    depends_on:
+      - api
+    networks:
+      - default
+    environment:
+      DAPR_HTTP_PORT: 3500
+
+  webapp-dapr:
+    image: "daprio/daprd:edge"
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "webapp",
+        "-app-port",
+        "8080",
+        "--resources-path",
+        "/components",
+        "-log-level",
+        "debug",
+      ]
+    volumes:
+      - ./components:/components
+    depends_on:
+      - webapp
+    network_mode: "service:webapp"

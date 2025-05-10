@@ -36,7 +36,6 @@ dbContext.Categories.Add(new Category
         },
     }
 });
-
 dbContext.Categories.Add(new Category
 {
     Name = "Getränke",

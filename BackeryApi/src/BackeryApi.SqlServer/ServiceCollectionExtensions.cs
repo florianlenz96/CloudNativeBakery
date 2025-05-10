@@ -10,11 +10,10 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddBackerySqlServer(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("BackeryApi");
         services.AddScoped<IProductRepository, ProductRepository>();
-        
         services.AddDbContext<BackeryDbContext>(options =>
-            options.UseSqlServer(connectionString));
+            options.UseSqlServer(configuration.GetConnectionString("BackeryApi")));
+        
         return services;
     }
 }

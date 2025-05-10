@@ -8,11 +8,6 @@ public class BackeryDbContext(DbContextOptions<BackeryDbContext> options) : DbCo
     public DbSet<Category> Categories { get; set; }
     public DbSet<Article> Articles { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer();
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Article>()
