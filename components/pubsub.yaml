@@ -7,4 +7,4 @@ spec:
   version: v1
   metadata:
     - name: connectionString
-      value: Endpoint=sb://daprmessagingflz.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=9aeNOLTTQ23EKxqWphhZdPxurFnXjKry9+ASbEKytwE=
+      value: 
