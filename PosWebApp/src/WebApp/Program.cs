@@ -5,9 +5,10 @@ using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDaprClient();
+
 // HTTP API client for BackendApiService
-builder.Services.AddHttpClient<BackendApiService>(options =>
-    options.BaseAddress = new Uri(builder.Configuration["BackendApiService:BaseAddress"]));
+builder.Services.AddTransient<BackendApiService>();
 
 // Register MudBlazor services for UI components
 builder.Services.AddMudServices();

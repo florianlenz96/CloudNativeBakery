@@ -1,20 +1,25 @@
 using Backery.Application.ShoppingBasket.Command;
 using BackeryApi.Domain.ShoppingBasket.Events;
+using Dapr.Client;
 
 namespace Backery.Application.ShoppingBasket.Handler;
 
 public class CreateOrderCommandHandler
 {
-    private readonly IMessagingService _messagingService;
-    
-    public CreateOrderCommandHandler(IMessagingService messagingService)
+    private readonly DaprClient _daprClient;
+    public CreateOrderCommandHandler(DaprClient daprClient)
     {
-        _messagingService = messagingService;
+        _daprClient = daprClient;
     }
     
     public async Task Handle(CreateOrderCommand command, CancellationToken cancellationToken)
     {
         var orderCreatedEvent = new OrderCreatedEvent(command.Articles, Guid.NewGuid().ToString());
-        await _messagingService.SendOrderCreatedEventAsync(orderCreatedEvent, cancellationToken);
+        
+        await this._daprClient.PublishEventAsync(
+            pubsubName: "orderpubsub",
+            topicName: "ordercreated",
+            data: orderCreatedEvent,
+            cancellationToken: cancellationToken);
     }
 }
