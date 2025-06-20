@@ -90,3 +90,32 @@ services:
     depends_on:
       - webapp
     network_mode: "service:webapp"
+
+  orderservice:
+    build:
+      context: .
+      dockerfile: BackeryOrderService/src/Dockerfile
+    ports:
+      - "7070:8080"
+    networks:
+      - default
+
+  orderservice-dapr:
+    image: "daprio/daprd:edge"
+    command:
+      [
+        "./daprd",
+        "-app-id",
+        "orderservice",
+        "-app-port",
+        "8080",
+        "--resources-path",
+        "/components",
+        "-log-level",
+        "debug",
+      ]
+    volumes:
+      - ./components:/components
+    depends_on:
+      - orderservice
+    network_mode: "service:orderservice"
