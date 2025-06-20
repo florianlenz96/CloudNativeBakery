@@ -3,8 +3,10 @@ kind: Component
 metadata:
   name: orderpubsub
 spec:
-  type: pubsub.azure.servicebus.topics
+  type: pubsub.redis
   version: v1
   metadata:
-    - name: connectionString
-      value: 
+    - name: redisHost
+      value: "redis:6379"
+    - name: redisPassword
+      value: ""

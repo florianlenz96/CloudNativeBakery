@@ -20,6 +20,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackeryApi.Application", "B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackeryApi.SqlServer.Migrator", "BackeryApi\src\BackeryApi.SqlServer.Migrator\BackeryApi.SqlServer.Migrator.csproj", "{27FA12E9-2B67-493C-B615-893E3AD02FE3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BackeryOrderService", "BackeryOrderService.Api\src\BackeryOrderService.csproj", "{95CBBBFB-2E8A-47CB-AA10-BDFB00DB64B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackeryOrderService", "BackeryOrderService\src\BackeryOrderService.csproj", "{AA0EED76-1E8B-47CC-AB05-3B044EE37D16}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FCB0E9FE-A96C-4C15-AEF6-9B3C20E90552}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +40,8 @@ Global
 		{12238275-B138-43BE-B799-E36BB71B03DA} = {E9E5A5DB-C37A-4064-8709-691E160E0A44}
 		{89620325-AA23-412D-9E7D-6F06E8909B2A} = {E9E5A5DB-C37A-4064-8709-691E160E0A44}
 		{27FA12E9-2B67-493C-B615-893E3AD02FE3} = {E9E5A5DB-C37A-4064-8709-691E160E0A44}
+		{FCB0E9FE-A96C-4C15-AEF6-9B3C20E90552} = {95CBBBFB-2E8A-47CB-AA10-BDFB00DB64B3}
+		{AA0EED76-1E8B-47CC-AB05-3B044EE37D16} = {FCB0E9FE-A96C-4C15-AEF6-9B3C20E90552}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DCECDB9C-3685-465F-A807-D4ECED2CD23E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -60,5 +68,9 @@ Global
 		{27FA12E9-2B67-493C-B615-893E3AD02FE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27FA12E9-2B67-493C-B615-893E3AD02FE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27FA12E9-2B67-493C-B615-893E3AD02FE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA0EED76-1E8B-47CC-AB05-3B044EE37D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA0EED76-1E8B-47CC-AB05-3B044EE37D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA0EED76-1E8B-47CC-AB05-3B044EE37D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA0EED76-1E8B-47CC-AB05-3B044EE37D16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

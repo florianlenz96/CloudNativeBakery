@@ -4,13 +4,11 @@ using WebApp.Models.ShoppingCart;
 
 namespace WebApp.Services;
 
-public class BackendApiService(DaprClient DaprClient)
+public class BackendApiService(DaprClient daprClient)
 {
-    private readonly DaprClient _daprClient = DaprClient;
-
     public async Task<IReadOnlyCollection<Category>?> LoadCategoriesAsync()
     {
-        return await _daprClient
+        return await daprClient
             .InvokeMethodAsync<IReadOnlyCollection<Category>>(
                 HttpMethod.Get,
                 "api",
@@ -21,7 +19,7 @@ public class BackendApiService(DaprClient DaprClient)
     {
         try
         {
-            await _daprClient
+            await daprClient
                 .InvokeMethodAsync(
                     HttpMethod.Post,
                     "api",
